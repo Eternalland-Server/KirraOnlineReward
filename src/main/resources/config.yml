@@ -1,0 +1,15 @@
+settings:
+  database:
+    host: 172.18.0.1
+    port: 3306
+    user: rpg-test
+    password: jPGbpbpCy3W5Ssmz
+    database: rpg-test
+  online-rewards:
+    10: "10_min_online_gift"
+    30: "30_min_online_gift"
+    60: "60_min_online_gift"
+    120: "120_min_online_gift"
+    360: "360_min_online_gift"
+    720: "720_min_online_gift"
+    1200: "1200_min_online_gift"
