@@ -10,8 +10,10 @@ import net.sakuragame.eternal.kirraonlinereward.KirraOnlineRewardAPI
 import net.sakuragame.eternal.kirraonlinereward.Profile.Companion.getProfile
 import net.sakuragame.eternal.kirraonlinereward.compat.dragoncore.screen.Online
 import net.sakuragame.eternal.kirraonlinereward.compat.dragoncore.screen.Reward
+import org.bukkit.Sound
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common5.Baffle
+import taboolib.module.chat.colored
 import taboolib.platform.util.giveItem
 import java.util.concurrent.TimeUnit
 
@@ -46,12 +48,13 @@ object FunctionDCListener {
             return
         }
         val reward = KirraOnlineRewardAPI.rewardItems[number - 1]
-        if (reward.minutes < profile.getOnlineMinutes()) {
+        if (reward.minutes > profile.getOnlineMinutes()) {
             return
         }
         profile.setOnlineReceives(number)
+        player.sendTitle("&6&l在线礼包".colored(), "&e您已领取在线 &f${reward.minutes} &e分钟礼包.".colored(), 10, 70, 20)
         player.giveItem(reward.item)
-        MessageAPI.sendActionTip(player, "&6&l➱ &e您已领取在线 &f${reward.minutes} &e分钟礼包!")
+        player.playSound(player.location, Sound.BLOCK_NOTE_PLING, 1f, 1f)
         DragonCoreCompat.updateDragonCoreVariable(player)
     }
 }

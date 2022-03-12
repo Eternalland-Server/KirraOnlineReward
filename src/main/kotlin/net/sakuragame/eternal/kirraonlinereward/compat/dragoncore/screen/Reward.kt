@@ -133,31 +133,37 @@ object Reward {
             })
 
             it.addComponent(SlotComp("s_2", "online_reward_2").apply {
+                drawBackground = false
                 x = "f_2.x"
                 y = "f_2.y"
                 visible = "background.visible"
             })
             it.addComponent(SlotComp("s_3", "online_reward_3").apply {
+                drawBackground = false
                 x = "f_3.x"
                 y = "f_3.y"
                 visible = "background.visible"
             })
             it.addComponent(SlotComp("s_4", "online_reward_4").apply {
+                drawBackground = false
                 x = "f_4.x"
                 y = "f_4.y"
                 visible = "background.visible"
             })
             it.addComponent(SlotComp("s_5", "online_reward_5").apply {
+                drawBackground = false
                 x = "f_5.x"
                 y = "f_5.y"
                 visible = "background.visible"
             })
             it.addComponent(SlotComp("s_6", "online_reward_6").apply {
+                drawBackground = false
                 x = "f_6.x"
                 y = "f_6.y"
                 visible = "background.visible"
             })
             it.addComponent(SlotComp("s_7", "online_reward_7").apply {
+                drawBackground = false
                 x = "f_7.x"
                 y = "f_7.y"
                 visible = "background.visible"

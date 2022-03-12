@@ -22,12 +22,14 @@ object KirraOnlineRewardAPI {
 
     fun getUpcomingMinutes(player: Player): Int? {
         val profile = player.getProfile() ?: return null
-        return rewardItems.find { it.minutes > profile.getOnlineMinutes() }?.minutes ?: rewardItems.last().minutes
+        return rewardItems[profile.getOnlineReceives()].minutes
+//        return rewardItems.find { it.minutes > profile.getOnlineMinutes() }?.minutes ?: rewardItems.last().minutes
     }
 
     fun getUpcomingReward(player: Player): ItemStack? {
-        val upcomingMinutes = getUpcomingMinutes(player)
-        return rewardItems.find { it.minutes == upcomingMinutes }?.item
+        val profile = player.getProfile() ?: return null
+        return rewardItems[profile.getOnlineReceives()].item
+//        return rewardItems.find { it.minutes == upcomingMinutes }?.item
     }
 
     private fun fillItems() {

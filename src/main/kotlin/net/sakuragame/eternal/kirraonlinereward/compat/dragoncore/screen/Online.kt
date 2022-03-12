@@ -7,7 +7,6 @@ import com.taylorswiftcn.megumi.uifactory.generate.ui.component.base.TextureComp
 import com.taylorswiftcn.megumi.uifactory.generate.ui.screen.ScreenUI
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
-import taboolib.module.chat.colored
 
 object Online {
 
@@ -41,6 +40,7 @@ object Online {
                 )
             })
             it.addComponent(SlotComp("icon", "online_reward_big_slot").apply {
+                drawBackground = false
                 x = "body.x+8"
                 y = "body.y+9"
                 scale = 2.0.toString()
@@ -61,7 +61,7 @@ object Online {
                 width = "4"
                 height = "37"
                 limitX = "progress_bg.x"
-                limitY = "progress_bg.y + (1 - (global.reward_progress_current_minutes / global.reward_progress_upcoming_minutes)) * 39"
+                limitY = "func.ceil(progress_bg.y + (1 - (global.reward_progress_current_minutes / global.reward_progress_upcoming_minutes)) * 39)"
                 limitWidth = "6"
                 limitHeight = "(global.reward_progress_current_minutes / global.reward_progress_upcoming_minutes) * 39"
             })

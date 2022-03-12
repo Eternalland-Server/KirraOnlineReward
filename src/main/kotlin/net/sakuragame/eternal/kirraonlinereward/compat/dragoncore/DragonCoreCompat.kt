@@ -26,20 +26,20 @@ object DragonCoreCompat {
                     PacketSender.putClientSlotItem(player, "online_reward_${index + 1}", data.item)
                 }
             }
-            val currentMinutes = profile.getOnlineMinutes()
+            val currentMinutes = if (profile.getOnlineMinutes() == 0) 0.01 else profile.getOnlineMinutes().toDouble()
             val currentReceives = profile.getOnlineReceives()
             val upcomingMinutes = KirraOnlineRewardAPI.getUpcomingMinutes(player) ?: return@submit
             PacketSender.sendRunFunction(player, "default", "global.reward_progress_current_minutes = $currentMinutes;", true)
             PacketSender.sendRunFunction(player, "default", "global.reward_progress_upcoming_minutes = $upcomingMinutes;", true)
             PacketSender.putClientSlotItem(player, "online_reward_big_slot", KirraOnlineRewardAPI.getUpcomingReward(player))
             val variableMap = mutableMapOf<String, String>().also { map ->
-                map["current_minutes"] = "&e在线 $upcomingMinutes 分钟".colored()
+                map["current_minutes"] = "&e在线${upcomingMinutes}分钟".colored()
                 for (index in 1..KirraOnlineRewardAPI.rewardItems.size) {
                     if (currentReceives < index) {
                         if (KirraOnlineRewardAPI.rewardItems[index - 1].minutes <= profile.getOnlineMinutes()) {
                             map["reward_${index}"] = "&a可领取".colored()
                         } else {
-                            map["reward_${index}"] = "&7不可领取".colored()
+                            map["reward_${index}"] = "&7未解锁".colored()
                         }
                     } else {
                         map["reward_$index"] = "&7已领取".colored()
