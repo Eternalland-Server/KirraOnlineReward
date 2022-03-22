@@ -17,7 +17,7 @@ object Online {
         UI = ScreenUI("online").also {
             it.match = "hud"
             it.imports.add("reward")
-            it.addComponent(TextureComp("body", "hud/online/body.png").apply {
+            it.addComponent(TextureComp("body", "func.PlaceholderAPI_Get('body_texture')").apply {
                 x = "5"
                 y = "h*0.05"
                 width = "48"

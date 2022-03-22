@@ -33,10 +33,18 @@ object DragonCoreCompat {
             PacketSender.sendRunFunction(player, "default", "global.reward_progress_upcoming_minutes = $upcomingMinutes;", true)
             PacketSender.putClientSlotItem(player, "online_reward_big_slot", KirraOnlineRewardAPI.getUpcomingReward(player))
             val variableMap = mutableMapOf<String, String>().also { map ->
-                map["current_minutes"] = "&e在线${upcomingMinutes}分钟".colored()
+                if (upcomingMinutes <= currentMinutes.toInt()) {
+                    map["body_texture"] = "hud/online/body_1.png"
+                    map["current_minutes"] = "&a可领取".colored()
+                } else {
+                    map["body_texture"] = "hud/online/body.png"
+                    map["current_minutes"] = "&e在线${upcomingMinutes}分钟".colored()
+                }
                 for (index in 1..KirraOnlineRewardAPI.rewardItems.size) {
+                    map["background_texture_$index"] = "hud/online/0.png"
                     if (currentReceives < index) {
                         if (KirraOnlineRewardAPI.rewardItems[index - 1].minutes <= profile.getOnlineMinutes()) {
+                            map["background_texture_$index"] = "hud/online/1.png"
                             map["reward_${index}"] = "&a可领取".colored()
                         } else {
                             map["reward_${index}"] = "&7未解锁".colored()

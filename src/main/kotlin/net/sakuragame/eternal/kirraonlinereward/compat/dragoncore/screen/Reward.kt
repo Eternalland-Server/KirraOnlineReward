@@ -17,7 +17,7 @@ object Reward {
     @Awake(LifeCycle.ENABLE)
     private fun i() {
         UI = ScreenUI("reward").also {
-            it.addComponent(TextureComp("o_1", "hud/online/0.png").apply {
+            it.addComponent(TextureComp("o_1", "func.PlaceholderAPI_Get('background_texture_1')").apply {
                 x = "background.x+8"
                 y = "background.y+5"
                 width = "75"
@@ -46,49 +46,48 @@ object Reward {
                     addValue("1")
                 })
             })
-            it.addComponent(TextureComp("o_2", "hud/online/1.png").apply {
+            it.addComponent(TextureComp("o_2", "func.PlaceholderAPI_Get('background_texture_2')").apply {
                 x = "o_1.x"
                 y = "o_1.y+17"
                 width = "75"
                 height = "16"
                 visible = "background.visible"
             })
-            it.addComponent(TextureComp("o_3", "0,0,0,0").apply {
+            it.addComponent(TextureComp("o_3", "func.PlaceholderAPI_Get('background_texture_3')").apply {
                 x = "o_2.x"
                 y = "o_2.y+17"
                 width = "75"
                 height = "16"
                 visible = "background.visible"
             })
-            it.addComponent(TextureComp("o_4", "0,0,0,0").apply {
+            it.addComponent(TextureComp("o_4", "func.PlaceholderAPI_Get('background_texture_4')").apply {
                 x = "o_3.x"
                 y = "o_3.y+17"
                 width = "75"
                 height = "16"
                 visible = "background.visible"
             })
-            it.addComponent(TextureComp("o_5", "0,0,0,0").apply {
+            it.addComponent(TextureComp("o_5", "func.PlaceholderAPI_Get('background_texture_5')").apply {
                 x = "o_4.x"
                 y = "o_4.y+17"
                 width = "75"
                 height = "16"
                 visible = "background.visible"
             })
-            it.addComponent(TextureComp("o_6", "0,0,0,0").apply {
+            it.addComponent(TextureComp("o_6", "func.PlaceholderAPI_Get('background_texture_6')").apply {
                 x = "o_5.x"
                 y = "o_5.y+17"
                 width = "75"
                 height = "16"
                 visible = "background.visible"
             })
-            it.addComponent(TextureComp("o_7", "0,0,0,0").apply {
+            it.addComponent(TextureComp("o_7", "func.PlaceholderAPI_Get('background_texture_7')").apply {
                 x = "o_6.x"
                 y = "o_6.y+17"
                 width = "75"
                 height = "16"
                 visible = "background.visible"
             })
-
             it.addComponent(TextureComp("f_2", "hud/online/frame_a.png").apply {
                 x = "o_2.x"
                 y = "o_2.y"

@@ -10,6 +10,7 @@ import net.sakuragame.eternal.kirraonlinereward.KirraOnlineRewardAPI
 import net.sakuragame.eternal.kirraonlinereward.Profile.Companion.getProfile
 import net.sakuragame.eternal.kirraonlinereward.compat.dragoncore.screen.Online
 import net.sakuragame.eternal.kirraonlinereward.compat.dragoncore.screen.Reward
+import org.bukkit.Bukkit
 import org.bukkit.Sound
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common5.Baffle
@@ -34,6 +35,7 @@ object FunctionDCListener {
 
     @SubscribeEvent
     fun e(e: UIFCompSubmitEvent) {
+        if (!e.compID.startsWith("l_")) return
         if (e.params.getParam(0) != KirraOnlineReward.plugin.name) {
             return
         }

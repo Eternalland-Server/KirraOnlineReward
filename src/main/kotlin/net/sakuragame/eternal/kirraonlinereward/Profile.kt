@@ -1,5 +1,6 @@
 package net.sakuragame.eternal.kirraonlinereward
 
+import net.sakuragame.eternal.justmessage.api.MessageAPI
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerKickEvent
@@ -8,6 +9,7 @@ import taboolib.common.platform.Schedule
 import taboolib.common.platform.event.EventPriority
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.submit
+import taboolib.platform.util.asLangText
 import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -16,14 +18,14 @@ class Profile(val player: Player) {
 
     data class ProfileOnlineData(val onlineMinutes: AtomicInteger = AtomicInteger(0), val onlineReceives: AtomicInteger = AtomicInteger(0))
 
-    val dayOfMonth = localDate.dayOfMonth
+    val dayOfMonth = getLocalTime().dayOfMonth
 
     val onlineData = ProfileOnlineData()
 
     companion object {
 
-        val localDate by lazy {
-            LocalDate.now()!!
+        fun getLocalTime(): LocalDate {
+            return LocalDate.now()!!
         }
 
         @Schedule(async = true, period = 20 * 60 * 5)
@@ -81,6 +83,13 @@ class Profile(val player: Player) {
      */
     fun save() {
         submit(async = true) {
+            if (dayOfMonth != getLocalTime().dayOfMonth) {
+                onlineData.apply {
+                    onlineMinutes.set(0)
+                    onlineReceives.set(0)
+                }
+                MessageAPI.sendActionTip(player, player.asLangText("message-online-reward-reset"))
+            }
             onlineData.apply {
                 Database.setOnlinePair(player, Pair(onlineMinutes.get(), onlineReceives.get()))
             }
