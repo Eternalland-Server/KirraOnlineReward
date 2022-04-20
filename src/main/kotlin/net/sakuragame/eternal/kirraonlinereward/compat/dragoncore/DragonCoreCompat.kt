@@ -4,7 +4,6 @@ import com.taylorswiftcn.megumi.uifactory.generate.function.Statements
 import net.sakuragame.eternal.dragoncore.network.PacketSender
 import net.sakuragame.eternal.kirraonlinereward.KirraOnlineRewardAPI
 import net.sakuragame.eternal.kirraonlinereward.Profile.Companion.getProfile
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import taboolib.common.platform.function.submit
 import taboolib.module.chat.colored
@@ -26,8 +25,8 @@ object DragonCoreCompat {
                     PacketSender.putClientSlotItem(player, "online_reward_${index + 1}", data.item)
                 }
             }
-            val currentMinutes = if (profile.getOnlineMinutes() == 0) 0.01 else profile.getOnlineMinutes().toDouble()
-            val currentReceives = profile.getOnlineReceives()
+            val currentMinutes = if (profile.onlineMinutes == 0) 0.01 else profile.onlineMinutes.toDouble()
+            val currentReceives = profile.onlineReceives
             val upcomingMinutes = KirraOnlineRewardAPI.getUpcomingMinutes(player) ?: return@submit
             PacketSender.sendRunFunction(player, "default", "global.reward_progress_current_minutes = $currentMinutes;", true)
             PacketSender.sendRunFunction(player, "default", "global.reward_progress_upcoming_minutes = $upcomingMinutes;", true)
@@ -43,7 +42,7 @@ object DragonCoreCompat {
                 for (index in 1..KirraOnlineRewardAPI.rewardItems.size) {
                     map["background_texture_$index"] = "hud/online/0.png"
                     if (currentReceives < index) {
-                        if (KirraOnlineRewardAPI.rewardItems[index - 1].minutes <= profile.getOnlineMinutes()) {
+                        if (KirraOnlineRewardAPI.rewardItems[index - 1].minutes <= profile.onlineReceives) {
                             map["background_texture_$index"] = "hud/online/1.png"
                             map["reward_${index}"] = "&a可领取".colored()
                         } else {

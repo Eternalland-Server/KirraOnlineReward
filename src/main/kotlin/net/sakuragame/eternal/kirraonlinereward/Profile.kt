@@ -11,22 +11,20 @@ import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.submit
 import taboolib.platform.util.asLangText
 import java.time.LocalDate
-import java.util.concurrent.atomic.AtomicInteger
 
 @Suppress("MemberVisibilityCanBePrivate")
 class Profile(val player: Player) {
 
-    data class ProfileOnlineData(val onlineMinutes: AtomicInteger = AtomicInteger(0), val onlineReceives: AtomicInteger = AtomicInteger(0))
+    var onlineMinutes = 0
 
-    val dayOfMonth = getLocalTime().dayOfMonth
+    var onlineReceives = 0
 
-    val onlineData = ProfileOnlineData()
+    val dayOfMonth = localTime.dayOfMonth
 
     companion object {
 
-        fun getLocalTime(): LocalDate {
-            return LocalDate.now()!!
-        }
+        val localTime: LocalDate
+            get() = LocalDate.now()!!
 
         @Schedule(async = true, period = 20 * 60 * 5)
         fun s() {
@@ -71,10 +69,8 @@ class Profile(val player: Player) {
     fun read() {
         submit(async = true) {
             val pair = Database.getOnlinePair(player)
-            onlineData.apply {
-                onlineMinutes.set(pair.first)
-                onlineReceives.set(pair.second)
-            }
+            onlineMinutes = pair.first
+            onlineReceives = pair.second
         }
     }
 
@@ -83,16 +79,12 @@ class Profile(val player: Player) {
      */
     fun save() {
         submit(async = true) {
-            if (dayOfMonth != getLocalTime().dayOfMonth) {
-                onlineData.apply {
-                    onlineMinutes.set(0)
-                    onlineReceives.set(0)
-                }
+            if (dayOfMonth != localTime.dayOfMonth) {
+                onlineMinutes = 0
+                onlineReceives = 0
                 MessageAPI.sendActionTip(player, player.asLangText("message-online-reward-reset"))
             }
-            onlineData.apply {
-                Database.setOnlinePair(player, Pair(onlineMinutes.get(), onlineReceives.get()))
-            }
+            Database.setOnlinePair(player, onlineMinutes to onlineReceives)
         }
     }
 
@@ -100,16 +92,4 @@ class Profile(val player: Player) {
      * 销毁信息.
      */
     fun remove() = profiles.remove(player.name)
-
-    fun getOnlineMinutes() = onlineData.onlineMinutes.get()
-
-    fun plusOnlineMinutes(toPlus: Int) = onlineData.onlineMinutes.set(getOnlineMinutes() + toPlus)
-
-    fun setOnlineMinutes(int: Int) = onlineData.onlineMinutes.set(int)
-
-    fun getOnlineReceives() = onlineData.onlineReceives.get()
-
-    fun plusOnlineReceives(toPlus: Int) = onlineData.onlineReceives.set(getOnlineReceives() + toPlus)
-
-    fun setOnlineReceives(int: Int) = onlineData.onlineReceives.set(int)
 }

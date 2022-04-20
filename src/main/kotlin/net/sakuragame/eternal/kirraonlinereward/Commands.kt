@@ -52,8 +52,8 @@ object Commands {
                 execute<Player> { player, context, argument ->
                     val profile = player.getProfile() ?: return@execute
                     player.sendMessage("context: ${context.get(1)}, $argument")
-                    profile.setOnlineMinutes(context.get(1).toInt())
-                    profile.setOnlineReceives(argument.toInt())
+                    profile.onlineMinutes = context.get(1).toInt()
+                    profile.onlineReceives = argument.toInt()
                     DragonCoreCompat.updateDragonCoreVariable(player)
                     player.sendMessage("ok!")
                 }

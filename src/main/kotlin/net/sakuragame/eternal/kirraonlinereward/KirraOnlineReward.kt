@@ -8,7 +8,7 @@ import taboolib.platform.BukkitPlugin
 @Suppress("SpellCheckingInspection")
 object KirraOnlineReward : Plugin() {
 
-    @Config("config.yml")
+    @Config
     lateinit var conf: Configuration
         private set
 

@@ -4,13 +4,11 @@ import com.taylorswiftcn.megumi.uifactory.event.comp.UIFCompSubmitEvent
 import net.sakuragame.eternal.dragoncore.api.event.YamlSendToPlayerEvent
 import net.sakuragame.eternal.dragoncore.config.FolderType
 import net.sakuragame.eternal.dragoncore.network.PacketSender
-import net.sakuragame.eternal.justmessage.api.MessageAPI
 import net.sakuragame.eternal.kirraonlinereward.KirraOnlineReward
 import net.sakuragame.eternal.kirraonlinereward.KirraOnlineRewardAPI
 import net.sakuragame.eternal.kirraonlinereward.Profile.Companion.getProfile
 import net.sakuragame.eternal.kirraonlinereward.compat.dragoncore.screen.Online
 import net.sakuragame.eternal.kirraonlinereward.compat.dragoncore.screen.Reward
-import org.bukkit.Bukkit
 import org.bukkit.Sound
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common5.Baffle
@@ -46,17 +44,18 @@ object FunctionDCListener {
         }
         baffle.next(player.name)
         val number = e.params.getParamI(1)
-        if (profile.getOnlineReceives() >= number) {
+        if (profile.onlineReceives >= number) {
             return
         }
         val reward = KirraOnlineRewardAPI.rewardItems[number - 1]
-        if (reward.minutes > profile.getOnlineMinutes()) {
+        if (reward.minutes > profile.onlineMinutes) {
             return
         }
-        profile.setOnlineReceives(number)
-        player.sendTitle("&6&l在线礼包".colored(), "&e您已领取在线 &f${reward.minutes} &e分钟礼包.".colored(), 10, 70, 20)
+        profile.onlineReceives = number
+        player.sendTitle("&6&l在线礼包".colored(), "&e您已领取在线 &f${reward.minutes} &e分钟礼包.".colored(), 5, 70, 5)
         player.giveItem(reward.item)
         player.playSound(player.location, Sound.BLOCK_NOTE_PLING, 1f, 1f)
         DragonCoreCompat.updateDragonCoreVariable(player)
+        profile.save()
     }
 }
