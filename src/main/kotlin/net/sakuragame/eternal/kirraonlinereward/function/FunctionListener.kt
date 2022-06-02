@@ -10,9 +10,9 @@ object FunctionListener {
     @Schedule(period = 20 * 60, async = true)
     fun i() {
         Profile.profiles.values.forEach {
-            val dataByReceiveCounts = KirraOnlineRewardAPI.rewardItems[it.getOnlineReceives()]
-            if (dataByReceiveCounts.minutes >= it.getOnlineMinutes()) {
-                it.plusOnlineMinutes(1)
+            val dataByReceiveCounts = KirraOnlineRewardAPI.rewardItems[it.onlineReceives]
+            if (dataByReceiveCounts.minutes >= it.onlineMinutes) {
+                it.onlineMinutes++
                 updateDragonCoreVariable(it.player)
             }
         }

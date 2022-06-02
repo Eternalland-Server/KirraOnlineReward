@@ -42,7 +42,7 @@ object DragonCoreCompat {
                 for (index in 1..KirraOnlineRewardAPI.rewardItems.size) {
                     map["background_texture_$index"] = "hud/online/0.png"
                     if (currentReceives < index) {
-                        if (KirraOnlineRewardAPI.rewardItems[index - 1].minutes <= profile.onlineReceives) {
+                        if (KirraOnlineRewardAPI.rewardItems[index - 1].minutes <= profile.onlineMinutes) {
                             map["background_texture_$index"] = "hud/online/1.png"
                             map["reward_${index}"] = "&a可领取".colored()
                         } else {
