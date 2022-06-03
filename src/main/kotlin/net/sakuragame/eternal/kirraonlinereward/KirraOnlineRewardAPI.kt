@@ -1,14 +1,12 @@
 package net.sakuragame.eternal.kirraonlinereward
 
 import ink.ptms.zaphkiel.ZaphkielAPI
-import ink.ptms.zaphkiel.api.event.PluginReloadEvent
 import net.sakuragame.eternal.kirraonlinereward.Profile.Companion.getProfile
+import net.sakuragame.eternal.kirraonlinereward.function.FunctionProtect
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
-import taboolib.common.platform.event.SubscribeEvent
-import taboolib.common.platform.function.submit
 
 @Suppress("SpellCheckingInspection")
 object KirraOnlineRewardAPI {
@@ -19,10 +17,9 @@ object KirraOnlineRewardAPI {
 
     @Awake(LifeCycle.ACTIVE)
     fun reload() {
-        submit(delay = 200L) {
-            rewardItems.clear()
-            fillItems()
-        }
+        rewardItems.clear()
+        fillItems()
+        FunctionProtect.load()
     }
 
     fun getUpcomingMinutes(player: Player): Int? {

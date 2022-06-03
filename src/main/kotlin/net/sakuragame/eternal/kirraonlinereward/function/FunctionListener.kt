@@ -1,6 +1,5 @@
 package net.sakuragame.eternal.kirraonlinereward.function
 
-import net.sakuragame.eternal.kirraonlinereward.KirraOnlineRewardAPI
 import net.sakuragame.eternal.kirraonlinereward.Profile
 import net.sakuragame.eternal.kirraonlinereward.compat.dragoncore.DragonCoreCompat.updateDragonCoreVariable
 import taboolib.common.platform.Schedule
@@ -10,11 +9,8 @@ object FunctionListener {
     @Schedule(period = 20 * 60, async = true)
     fun i() {
         Profile.profiles.values.forEach {
-            val dataByReceiveCounts = KirraOnlineRewardAPI.rewardItems[it.onlineReceives]
-            if (dataByReceiveCounts.minutes >= it.onlineMinutes) {
-                it.onlineMinutes++
-                updateDragonCoreVariable(it.player)
-            }
+            it.onlineMinutes++
+            updateDragonCoreVariable(it.player)
         }
     }
 }
