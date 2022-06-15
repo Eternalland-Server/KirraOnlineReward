@@ -9,6 +9,7 @@ import net.sakuragame.eternal.kirraonlinereward.KirraOnlineRewardAPI
 import net.sakuragame.eternal.kirraonlinereward.Profile.Companion.getProfile
 import net.sakuragame.eternal.kirraonlinereward.compat.dragoncore.screen.Online
 import net.sakuragame.eternal.kirraonlinereward.compat.dragoncore.screen.Reward
+import org.bukkit.Bukkit
 import org.bukkit.Sound
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common5.Baffle
@@ -47,14 +48,19 @@ object FunctionDCListener {
         if (profile.onlineReceives >= number) {
             return
         }
-        val reward = KirraOnlineRewardAPI.rewardItems[number - 1]
-        if (reward.minutes > profile.onlineMinutes) {
+        Bukkit.broadcastMessage("onlineReceives: ${profile.onlineReceives}")
+        Bukkit.broadcastMessage("number: $number")
+        val maxReward = KirraOnlineRewardAPI.rewardItems.getOrNull(number - 1) ?: return
+        if (maxReward.minutes > profile.onlineMinutes) {
             return
         }
         profile.onlineReceives = number
-        player.sendTitle("&6&l在线礼包".colored(), "&e您已领取在线 &f${reward.minutes} &e分钟礼包.".colored(), 5, 70, 5)
-        player.giveItem(reward.item)
+        player.sendTitle("&6&l在线礼包".colored(), "&e您已领取在线 &f${maxReward.minutes} &e分钟礼包.".colored(), 5, 70, 5)
         player.playSound(player.location, Sound.BLOCK_NOTE_PLING, 1f, 1f)
+        (0..number).forEach {
+            val reward = KirraOnlineRewardAPI.rewardItems.getOrNull(it - 1) ?: return@forEach
+            player.giveItem(reward.item)
+        }
         DragonCoreCompat.updateDragonCoreVariable(player)
         profile.save()
     }
