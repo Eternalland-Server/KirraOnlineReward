@@ -17,8 +17,8 @@ object FunctionProtect {
 
     @SubscribeEvent
     fun e(e: PlayerLoginEvent) {
-        if (!loaded) {
-            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, "Server is loading.")
-        }
+//        if (!loaded) {
+//            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, "Server is loading.")
+//        }
     }
 }

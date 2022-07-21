@@ -48,8 +48,6 @@ object FunctionDCListener {
         if (profile.onlineReceives >= number) {
             return
         }
-        Bukkit.broadcastMessage("onlineReceives: ${profile.onlineReceives}")
-        Bukkit.broadcastMessage("number: $number")
         val maxReward = KirraOnlineRewardAPI.rewardItems.getOrNull(number - 1) ?: return
         if (maxReward.minutes > profile.onlineMinutes) {
             return
