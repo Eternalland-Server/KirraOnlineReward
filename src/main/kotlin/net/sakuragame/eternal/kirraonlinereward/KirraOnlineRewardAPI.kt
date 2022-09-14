@@ -2,7 +2,6 @@ package net.sakuragame.eternal.kirraonlinereward
 
 import ink.ptms.zaphkiel.ZaphkielAPI
 import net.sakuragame.eternal.kirraonlinereward.Profile.Companion.getProfile
-import net.sakuragame.eternal.kirraonlinereward.function.FunctionProtect
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import taboolib.common.LifeCycle
@@ -19,7 +18,6 @@ object KirraOnlineRewardAPI {
     fun reload() {
         rewardItems.clear()
         fillItems()
-        FunctionProtect.load()
     }
 
     fun getUpcomingMinutes(player: Player): Int? {
